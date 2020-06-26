@@ -39,7 +39,7 @@ async function run() {
 	const hashesPerName = await pMap(goodFolders, async (f) => {
 		const name = f.name;
 		const hashList = f.contents
-			.filter((f) => f.contenttype === 'image/jpeg')
+			.filter((f) => f.category === 1)
 			.map((f) => f.hash);
 		const hashes = new Set(hashList);
 		return {name, hashes};

@@ -37,9 +37,7 @@ async function run() {
 		goodFolders,
 		async (folder) => {
 			const name = folder.name;
-			const imageFiles = folder.contents.filter(
-				(file) => file.contenttype === 'image/jpeg'
-			);
+			const imageFiles = folder.contents.filter((file) => file.category === 1);
 			const hashToFilesMap = groupByHash(imageFiles);
 			const fileGroups = [...hashToFilesMap.values()].filter(
 				(files) => files.length > 1
