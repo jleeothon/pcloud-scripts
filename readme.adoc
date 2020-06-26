@@ -1,0 +1,5 @@
+= pCloud scripts
+
+== intersects.js
+
+Given a (flat) group of folders with pictures, prints folder names in groups such that all folder names in a group have pictures with matching hashes.

@@ -1,0 +1,17 @@
+{
+  "name": "pcloud-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "xo --pretier"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "p-map": "^4.0.0",
+    "pcloud-sdk-js": "^1.4.4"
+  },
+  "devDependencies": {
+    "xo": "^0.32.0"
+  }
+}
