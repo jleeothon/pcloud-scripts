@@ -1,17 +1,22 @@
 {
   "name": "pcloud-scripts",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "Collection of scripts to clean up my pCloud",
   "scripts": {
-    "lint": "xo --prettier"
+    "lint": "xo"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "delay": "^4.4.0",
+    "p-all": "^3.0.0",
+    "p-filter": "^2.1.0",
     "p-map": "^4.0.0",
-    "pcloud-sdk-js": "^1.4.4"
+    "pcloud-sdk-js": "^2.0.0",
+    "redis": "^3.0.2"
   },
   "devDependencies": {
-    "xo": "^0.32.0"
+    "xo": "^0.33.0"
   }
 }

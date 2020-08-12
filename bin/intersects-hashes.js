@@ -16,14 +16,14 @@ function intersects(a, b) {
 function mergeNames(hashesPerName) {
 	const result = [];
 	for (const {name, hashes} of hashesPerName) {
-		const resultItem = result.find((i) => intersects(hashes, i.hashUnion));
+		const resultItem = result.find(i => intersects(hashes, i.hashUnion));
 		if (!resultItem) {
 			result.push({names: [name], hashUnion: hashes});
 			continue;
 		}
 
 		resultItem.names.push(name);
-		hashes.forEach((h) => resultItem.hashUnion.add(h));
+		hashes.forEach(h => resultItem.hashUnion.add(h));
 	}
 
 	return result;
@@ -32,15 +32,15 @@ function mergeNames(hashesPerName) {
 async function run() {
 	const folderId = Number.parseInt(process.env.FOLDER_ID, 10);
 	const allFiles = await client.listfolder(folderId, {recursive: true});
-	const goodFolders = allFiles.contents.filter((f) =>
+	const goodFolders = allFiles.contents.filter(f =>
 		f.name.match(/^[\w-]+ \d+$/)
 	);
 
-	const hashesPerName = await pMap(goodFolders, async (f) => {
+	const hashesPerName = await pMap(goodFolders, async f => {
 		const name = f.name;
 		const hashList = f.contents
-			.filter((f) => f.category === 1)
-			.map((f) => f.hash);
+			.filter(f => f.category === 1)
+			.map(f => f.hash);
 		const hashes = new Set(hashList);
 		return {name, hashes};
 	});
@@ -57,6 +57,6 @@ async function run() {
 	console.log(onlyNames);
 }
 
-run().catch((error) => {
+run().catch(error => {
 	console.error(error);
 });

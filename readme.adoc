@@ -4,10 +4,43 @@ Collection of scripts to keep my pCloud organised.
 
 These scripts rely on environment variables: `ACCESS_TOKEN`, `FOLDER_ID`.
 
-== intersects.js
+Some scripts need Redis to run:
 
-Inside `FOLDER_ID`, given a (flat) group of folders with pictures, prints folder names in groups such that all folder names in a group have pictures with matching hashes.
+```
+docker-compose up -d
+```
 
-== dups.js
+== bin/cache-checksums.js
 
-Inside `FOLDER_ID`, given a (flat) group of folders with pictures, finds pictures with duplicate hashes, and keeps the one with the oldest creation or modification date.
+Caches all checksums for files under `process.env.FOLDER_PATH` in a Redis
+instance running in localhost.
+
+== bin/intersects-hashes.js
+
+Inside `FOLDER_ID`, given a (flat) group of folders with pictures, prints folder
+names in groups such that all folder names in a group have pictures with
+matching hashes.
+
+== bin/intersects-checksums.js
+
+Similar to `bin/intersects-hashes.js`. Inside `FOLDER_ID`, given a (flat) group
+of folders with pictures, prints folder names in groups such that all folder
+names in a group have pictures with checksums.
+
+Requires checksums to have been cached in Redis.
+
+== bin/broken-images.js
+
+⚠️ TODO
+
+Inside `FOLDER_ID` finds JPEG files that are incomplete.
+
+== bin/rm-dups.js
+
+Inside `FOLDER_ID`, given a (flat) group of folders with pictures, finds
+pictures with duplicate hashes, and keeps the one with the oldest creation or
+modification date.
+
+== bin/rm-empty.js
+
+Inside `FOLDER_ID`, removes empty directories (non-recursive).
