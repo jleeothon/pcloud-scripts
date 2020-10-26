@@ -1,3 +1,6 @@
+'use strict';
+
+const {program} = require('commander');
 const {promisify} = require('util');
 const pcloudSdk = require('pcloud-sdk-js');
 const pMap = require('p-map');
@@ -43,9 +46,9 @@ async function getChecksum(file) {
 	return [file.name, checksum];
 }
 
-async function run() {
-	const folderId = Number.parseInt(process.env.FOLDER_ID, 10);
-	const allFiles = await pClient.listfolder(folderId, {recursive: true});
+async function run(path) {
+	const response = await pClient.api('listfolder', {params: {path, recursive: 1}});
+	const allFiles = response.metadata;
 	const goodFolders = allFiles.contents.filter(file => file.isfolder);
 
 	const hashesPerName = await pMap(goodFolders, async folder => {
@@ -67,8 +70,14 @@ async function run() {
 	console.log(onlyNames);
 }
 
-run().catch(error => {
-	console.error(error);
-}).finally(() => {
-	rClient.quit();
-});
+program
+	.arguments('<path>')
+	.action(path => {
+		run(path).catch(error => {
+			console.error(error);
+		}).finally(() => {
+			rClient.quit();
+		});
+	});
+
+program.parse(process.argv);

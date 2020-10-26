@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "commander": "^6.1.0",
     "delay": "^4.4.0",
     "p-all": "^3.0.0",
     "p-filter": "^2.1.0",

@@ -1,3 +1,5 @@
+'use strict';
+
 const pcloudSdk = require('pcloud-sdk-js');
 const pMap = require('p-map');
 

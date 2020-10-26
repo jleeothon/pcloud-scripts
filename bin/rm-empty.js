@@ -1,16 +1,21 @@
+'use strict';
+
 // Remove empty folders
 
 const pcloudSdk = require('pcloud-sdk-js');
 const pMap = require('p-map');
 const pFilter = require('p-filter');
 const delay = require('delay');
+const {getFoldersRecursive} = require('../lib/iter');
+
+const {program} = require('commander');
 
 const client = pcloudSdk.createClient(process.env.ACCESS_TOKEN);
 
-async function run() {
-	const folderId = Number.parseInt(process.env.FOLDER_ID, 10);
-	const allFiles = await client.listfolder(folderId, {recursive: true});
-	const foldersToRemove = await pFilter(allFiles.contents, f => {
+async function run(path) {
+	const response = await client.api('listfolder', {params: {path, recursive: 1}});
+	const root = getFoldersRecursive(response.metadata);
+	const foldersToRemove = await pFilter(root, f => {
 		return f.isfolder && f.contents.length === 0;
 	});
 	console.log(foldersToRemove);
@@ -21,4 +26,12 @@ async function run() {
 	}, {concurrency: 10});
 }
 
-run().catch(error => console.error('Error', error));
+program
+	.arguments('<path>')
+	.action(path => {
+		run(path).catch(error => {
+			console.error(error);
+		});
+	});
+
+program.parse(process.argv);

@@ -1,3 +1,5 @@
+'use strict';
+
 // Finds duplicates within folders, recursively
 
 const pcloudSdk = require('pcloud-sdk-js');
